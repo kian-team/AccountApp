@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-   <van-button round type="info">圆形按钮</van-button>
+   <van-button round type="info">Info</van-button>
   </div>
 </template>
 <script>
