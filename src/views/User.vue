@@ -79,8 +79,19 @@ export default {
             duration: 1000,
             forbidClick: true
           });
-        }else{
-          this.$router.push('/');
+        } else {
+          if (res.data.token) {
+            //存储在本地的localStograge中
+            this.$store.commit('setToken', res.data.token);
+            //跳转至其他页面
+            let redirect = decodeURIComponent(
+              this.$route.query.redirect || "/"
+            );
+            this.$router.push({
+              path: redirect
+            });
+          }
+          // this.$router.push("/");
         }
       });
       console.log("submit", values);

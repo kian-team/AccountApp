@@ -15,6 +15,7 @@
 <script>
 // @ is an alias to /src
 import { Calendar, List, Cell } from "vant";
+import { AccountList } from "../api";
 
 export default {
   name: "Home",
@@ -33,6 +34,11 @@ export default {
     };
   },
   methods: {
+    getData(){
+      AccountList().then(res =>{
+        console.log(res);
+      })
+    },
     formatDate(date) {
       return `${date.getMonth() + 1}/${date.getDate()}`;
     },
@@ -57,6 +63,9 @@ export default {
         }
       }, 1000);
     }
+  },
+  mounted(){
+    this.getData();
   }
 };
 </script>
