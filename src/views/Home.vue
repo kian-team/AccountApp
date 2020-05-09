@@ -1,11 +1,33 @@
 <template>
   <div class="home">
-    <van-row>
+    <div class="header">
+      <van-row>
+        <van-col span="4">
+          <van-cell class="setting-icon" icon="setting-o" />
+        </van-col>
+        <van-col span="16">
+          <van-cell
+            :title="currentTime"
+            @click="show = true"
+            is-link
+            arrow-direction="down"
+            value="内容"
+          />
+          <!-- <van-dropdown-menu>
+          <van-dropdown-item v-model="value2" :options="option2" />
+          </van-dropdown-menu>-->
+        </van-col>
+        <van-col span="4">
+          <van-cell icon="bar-chart-o" />
+        </van-col>
+      </van-row>
+    </div>
+    <!-- <van-row>
       <van-col span="8">
-        <van-cell title="请选择日期"  @click="show = true" />
+        <van-cell title="请选择日期" @click="show = true" />
       </van-col>
       <van-col span="16">{{currentDate}}</van-col>
-    </van-row>
+    </van-row>-->
 
     <nav>
       <van-list
@@ -25,6 +47,7 @@
       <van-empty v-else description="空空如也" />
     </nav>
     <div>
+      <van-popup v-model="show" round position="bottom" :style="{ height: '30%' }">
       <van-datetime-picker
         v-show="show"
         v-model="currentDate"
@@ -36,13 +59,25 @@
         @confirm="confirm"
         @cancel="cancel"
       />
+      </van-popup>
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import { Col, Row, DatetimePicker, List, Cell, Empty, Toast } from "vant";
+import {
+  Col,
+  Row,
+  DatetimePicker,
+  List,
+  Cell,
+  Empty,
+  Toast,
+  // DropdownMenu,
+  // DropdownItem,
+  Popup
+} from "vant";
 import { AccountList } from "../api";
 
 export default {
@@ -53,7 +88,10 @@ export default {
     "van-datetime-picker": DatetimePicker,
     "van-list": List,
     "van-cell": Cell,
-    "van-empty": Empty
+    "van-empty": Empty,
+    // "van-dropdown-menu": DropdownMenu,
+    // "van-dropdown-item": DropdownItem,
+    "van-popup":Popup
   },
   data() {
     return {
@@ -66,6 +104,12 @@ export default {
       maxDate: new Date(2025, 10, 1),
       currentDate: new Date()
     };
+  },
+  computed: {
+    currentTime() {
+      return `${this.currentDate.getFullYear()}年${this.currentDate.getMonth() +
+        1}月`;
+    }
   },
   methods: {
     confirm() {
@@ -124,3 +168,15 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+
+.home {
+  .header {
+    background: linear-gradient(135deg, #90f7ec 10%, #32ccbc 100%);
+    .setting-icon {
+      font-size: 20px;
+      // color: #ffffff;
+    }
+  }
+}
+</style>
