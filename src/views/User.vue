@@ -1,8 +1,9 @@
 <template>
   <div class="about">
-    <div class="user-login" v-if="token == null">
+    <div class="user-login" v-if="token == ''||token==null">
       <div class="header">
         <h3>用户登录</h3>
+        <button @click="LoginX">github</button>
         <van-image
           round
           v-show="!showPasswdImg"
@@ -54,7 +55,7 @@
 </template>
 <script>
 import { Button, Form, Field, Image as VanImage, Toast, Cell } from "vant";
-import { Login } from "../api/index";
+import { Login, LoginX } from "../api/index";
 import { mapState } from "vuex";
 export default {
   components: {
@@ -73,11 +74,19 @@ export default {
     };
   },
   computed: {
-    ...mapState([
-      'token'
-    ])
+    ...mapState(["token"])
   },
   methods: {
+    LoginX() {
+      let p = {
+        path: "http://localhost:8080" // + this.$route.fullPath
+      };
+      LoginX(p).then(res => {
+        console.log(res);
+        // debugger;
+        window.location.href = res.path;
+      });
+    },
     toggleImg() {
       this.showPasswdImg = !this.showPasswdImg;
     },

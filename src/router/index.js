@@ -5,6 +5,7 @@ const Home = () => import(/* webpackChunkName: "home" */ '../views/Home.vue');
 const About = () => import(/* webpackChunkName: "about" */ '../views/About.vue');
 const Info = () => import(/* webpackChunkName: "info" */ '../views/Info.vue');
 const User = () => import(/* webpackChunkName: "user" */ '../views/User.vue');
+const AddAccount = () => import(/* webpackChunkName: "user" */ '../views/AddAccount.vue');
 Vue.use(VueRouter)
 
 const routes = [
@@ -36,6 +37,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: User
+  },
+  {
+    path: '/addaccount',
+    name: AddAccount,
+    component: AddAccount
   }
 ]
 
@@ -48,6 +54,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   console.log(to);
   console.log(from);
+  let token = localStorage.getItem('token');
+  if(!token&& to.path == '/'){
+    console.log('user not login');
+    window.location.href ='/user';
+  }
   next();
 })
 export default router

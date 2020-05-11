@@ -1,14 +1,14 @@
 <template>
   <div class="footer">
     <div class="icon">
-      <div class="add"></div>
+      <div class="add" @click="AddAccount"></div>
     </div>
     <!-- <van-tabbar route v-model="active" active-color="#07c160" inactive-color="#000">
       <van-tabbar-item icon="home-o" replace to="/">首页</van-tabbar-item>
       <van-tabbar-item icon="chart-trending-o" replace to="/info">明细</van-tabbar-item>
       <van-tabbar-item icon="balance-o" replace to="/about">记账</van-tabbar-item>
       <van-tabbar-item icon="contact" replace to="/user">我的</van-tabbar-item>
-    </van-tabbar> -->
+    </van-tabbar>-->
   </div>
 </template>
 
@@ -23,6 +23,11 @@ export default {
     return {
       active: 0
     };
+  },
+  methods: {
+    AddAccount() {
+      this.$router.push("/addaccount");
+    }
   }
 };
 </script>
@@ -47,7 +52,7 @@ export default {
   border-radius: 50%;
   // background: #7fff00;
   color: #ffffff;
-  background-image: linear-gradient( 135deg, #ABDCFF 10%, #0396FF 100%);
+  background-image: linear-gradient(135deg, #abdcff 10%, #0396ff 100%);
   &::before {
     content: "";
     position: absolute;
