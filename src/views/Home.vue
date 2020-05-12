@@ -18,7 +18,7 @@
           </van-dropdown-menu>-->
         </van-col>
         <van-col span="4">
-          <van-cell icon="bar-chart-o" />
+          <van-cell icon="bar-chart-o" @click="routerInfo" />
         </van-col>
       </van-row>
     </div>
@@ -78,7 +78,7 @@ import {
   // DropdownItem,
   Popup
 } from "vant";
-import { AccountList } from "../api";
+import { AccountList, LoginCallBack } from "../api";
 
 export default {
   name: "Home",
@@ -112,6 +112,15 @@ export default {
     }
   },
   methods: {
+    routerInfo(){
+      this.$router.push('/info');
+    },
+    LoginCallBack(){
+      LoginCallBack().then(res =>{
+        console.log(res);
+        debugger;
+      })
+    },
     confirm() {
       this.show = false;
     },
