@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './registerServiceWorker'
+
+require('./mock/mock');
 // // 设置 rem 函数
 // function setRem () {
 //   // 320 默认大小16px; 320px = 20rem ;每个元素px基础上/16

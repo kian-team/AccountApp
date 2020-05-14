@@ -11,6 +11,7 @@ export default new Vuex.Store({
     app_id: localStorage['site_current_app_id'] ? localStorage['site_current_app_id'] : '',          //当前 app_id
     retry_count: 0,//登录重试次数,防止同一页面中多个ajax同时触发登录操作
     after_login_go: localStorage['site_current_login_go'] ? localStorage['site_current_login_go'] : '',//登录后跳转
+    showAddBtn: true
   },
   mutations: {
     set_token(state, token) {
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     removeToken(state) {
       localStorage.removeItem('token');
       state.token = null
+    },
+    toggleAddBtn(state, flag){
+      state.showAddBtn = flag
     }
   },
   actions: {

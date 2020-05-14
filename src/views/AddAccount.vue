@@ -2,31 +2,37 @@
   <div class="addaccount">
     <van-nav-bar title="记录" left-arrow @click-left="onClickLeft" @click-right="onClickRight">
       <template #right>
-        <van-icon name="search" size="18" />
       </template>
     </van-nav-bar>
     <nav>
       <van-tabs type="card" animated title-active-color="#ffcccc">
         <van-tab title="Pay" title-style>
           <nav>
-            <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+            <van-swipe class="my-swipe" :autoplay="3000" indicator-color="blue">
               <van-swipe-item>
-                <van-grid>
+                <van-grid :gutter="10">
                   <van-grid-item icon="photo-o" text="文字" />
                   <van-grid-item icon="photo-o" text="文字" />
                   <van-grid-item icon="photo-o" text="文字" />
                   <van-grid-item icon="photo-o" text="文字" />
-                </van-grid>
-                <van-grid>
                   <van-grid-item icon="photo-o" text="文字" />
                   <van-grid-item icon="photo-o" text="文字" />
                   <van-grid-item icon="photo-o" text="文字" />
                   <van-grid-item icon="photo-o" text="文字" />
                 </van-grid>
               </van-swipe-item>
-              <van-swipe-item>2</van-swipe-item>
-              <van-swipe-item>3</van-swipe-item>
-              <van-swipe-item>4</van-swipe-item>
+              <van-swipe-item>
+                <van-grid :gutter="10">
+                  <van-grid-item icon="photo-o" text="文字" />
+                  <van-grid-item icon="photo-o" text="文字" />
+                  <van-grid-item icon="photo-o" text="文字" />
+                  <van-grid-item icon="photo-o" text="文字" />
+                  <van-grid-item icon="photo-o" text="文字" />
+                  <van-grid-item icon="photo-o" text="文字" />
+                  <van-grid-item icon="photo-o" text="文字" />
+                  <van-grid-item icon="photo-o" text="文字" />
+                </van-grid>
+              </van-swipe-item>
             </van-swipe>
           </nav>
         </van-tab>
@@ -39,8 +45,6 @@
                   <van-grid-item icon="photo-o" text="文字" />
                   <van-grid-item icon="photo-o" text="文字" />
                   <van-grid-item icon="photo-o" text="文字" />
-                </van-grid>
-                <van-grid>
                   <van-grid-item icon="photo-o" text="文字" />
                   <van-grid-item icon="photo-o" text="文字" />
                   <van-grid-item icon="photo-o" text="文字" />
@@ -56,7 +60,13 @@
       </van-tabs>
     </nav>
     <nav>
-      <van-field readonly clickable :value="value" @touchstart.native.stop="show = true" />
+      <van-field
+        readonly
+        clickable
+        :value="value"
+        placeholder="请输入金额"
+        @touchstart.native.stop="show = true"
+      />
       <van-number-keyboard
         :show="show"
         theme="custom"
@@ -65,7 +75,7 @@
         @blur="show = false"
         @input="onInput"
         @delete="onDelete"
-         v-model="value"
+        v-model="value"
       />
     </nav>
   </div>
@@ -84,6 +94,7 @@ import {
   Toast,
   Field
 } from "vant";
+import { GetIcon } from "../api/index";
 export default {
   components: {
     "van-nav-bar": NavBar,
@@ -99,17 +110,32 @@ export default {
   data() {
     return {
       show: true,
-      value:''
+      value: "",
+      icons: []
     };
   },
   methods: {
+    GetIcon() {
+      GetIcon(res => {
+        this.icons = res;
+      });
+    },
     onClickLeft() {
       Toast("返回");
       this.$router.push("/");
     },
     onClickRight() {
       Toast("按钮");
+    },
+    onInput(value) {
+      Toast(value);
+    },
+    onDelete() {
+      Toast("删除");
     }
+  },
+  mounted() {
+    this.GetIcon();
   }
 };
 </script>
@@ -125,12 +151,12 @@ export default {
       border-right: none;
     }
   }
-  .my-swipe .van-swipe-item {
-    color: #fff;
-    font-size: 20px;
-    // line-height: 150px;
-    text-align: center;
-    background-color: #39a9ed;
-  }
+  // .my-swipe .van-swipe-item {
+  //   color: #fff;
+  //   font-size: 20px;
+  //   // line-height: 150px;
+  //   text-align: center;
+  //   background-color: #39a9ed;
+  // }
 }
 </style>
