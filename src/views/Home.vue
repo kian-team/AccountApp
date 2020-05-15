@@ -7,12 +7,7 @@
             <van-cell class="setting-icon" icon="setting-o" />
           </van-col>
           <van-col span="16">
-            <van-cell
-              :title="currentTime"
-              @click="show = true"
-              is-link
-              arrow-direction="down"
-            />
+            <van-cell :title="currentTime" @click="show = true" is-link arrow-direction="down" />
             <!-- <van-dropdown-menu>
           <van-dropdown-item v-model="value2" :options="option2" />
             </van-dropdown-menu>-->
@@ -21,6 +16,20 @@
             <van-cell icon="bar-chart-o" @click="routerInfo" />
           </van-col>
         </van-row>
+      </div>
+      <div class="money">
+        <div class="left">
+          <div>
+            <p>Pay(￥)</p>
+            <p>1234.5</p>
+          </div>
+        </div>
+        <div class="right">
+          <div>
+            <p>Earn(￥)</p>
+            <p>3456.7</p>
+          </div>
+        </div>
       </div>
     </van-sticky>
     <!-- <van-row>
@@ -38,7 +47,7 @@
         finished-text="没有更多了"
         @load="onLoad"
       >
-        <van-swipe-cell v-for="(item, index) in list" :key="index">
+        <van-swipe-cell class="list-item" v-for="(item, index) in list" :key="index">
           <van-cell>
             <template #icon>
               <van-image width="50" height="50" :src="item.photo" />
@@ -56,7 +65,7 @@
           </van-cell>
           <template #right>
             <van-button square type="danger" text="删除" />
-            <van-button square type="primary" text="收藏" />
+            <van-button square type="primary" text="修改" />
           </template>
         </van-swipe-cell>
       </van-list>
@@ -97,7 +106,7 @@ import {
   // Icon,
   SwipeCell,
   Button,
-  Image as VanImage 
+  Image as VanImage
 } from "vant";
 import { AccountList, LoginCallBack, GetList } from "../api";
 
@@ -116,7 +125,7 @@ export default {
     "van-sticky": Sticky,
     // "van-icon": Icon,
     "van-swipe-cell": SwipeCell,
-    "van-button":Button,
+    "van-button": Button,
     "van-image": VanImage
   },
   data() {
@@ -209,17 +218,60 @@ export default {
   },
   mounted() {
     // this.getData();
+    this.$store.commit('toggleAddBtn', true);
     this.GetList();
   }
 };
 </script>
 <style lang="scss">
 .home {
+  background: linear-gradient(to right, #3d4155, #34384a);
   .header {
     background: linear-gradient(135deg, #90f7ec 10%, #32ccbc 100%);
+    .van-cell {
+      background:#abdcff;
+    }
     .setting-icon {
       font-size: 20px;
       // color: #ffffff;
+    }
+  }
+  .money {
+    display: flex;
+    background: linear-gradient(135deg, #abdcff 10%, #0396ff 100%);
+    color: #ffffff;
+    text-align: center;
+    .left {
+      flex: 1;
+    }
+    .right {
+      flex: 1;
+    }
+  }
+  .list-item {
+    margin: 10px;
+    .van-cell {
+      border-radius: 10px;
+      color: #ffffff;
+      background: #001938;
+      background: linear-gradient(to right, #444a5d, #3c4356);
+      .custom-title {
+         font-weight: bold;
+      }
+      .van-cell__value {
+        font-size: 18px;
+        font-weight: bold;
+        color: #ffffff;
+      }
+    }
+    .van-cell:not(:last-child)::after {
+      border: none;
+    }
+    .van-swipe-cell__right {
+      .van-button--square {
+        height: 100%;
+        border-radius: 10px;
+      }
     }
   }
 }

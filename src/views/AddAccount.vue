@@ -135,6 +135,7 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit('toggleAddBtn', false);
     this.GetIcon();
   }
 };

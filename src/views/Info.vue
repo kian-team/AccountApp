@@ -1,12 +1,78 @@
 <template>
   <div class="about">
-    <van-dropdown-menu>
-      <van-dropdown-item v-model="value1" :options="option1" />
-    </van-dropdown-menu>
-    <van-empty v-show="false" description="空空如也" />
+    <van-nav-bar left-arrow @click-left="routerHome">
+      <template #title>
+        <van-dropdown-menu>
+          <van-dropdown-item v-model="value1" :options="option1" />
+        </van-dropdown-menu>
+      </template>
+    </van-nav-bar>
     <van-tabs type="card" @click="onClick" v-model="active">
       <van-tab title="类型">
         <div>类型</div>
+        <div class="type-list">
+          <van-empty v-show="!list" description="空空如也" />
+
+          <van-collapse v-show="list" v-model="activeNames" accordion>
+            <van-collapse-item name="1">
+              <template #title>
+                <div>Eating</div>
+              </template>
+              <template #value>
+                <div>-4565</div>
+              </template>
+              <van-list>
+                <van-cell v-for="(item, index) in list" :key="index">
+                  <template #title>
+                    <span class="custom-title">{{item.time}}</span>
+                  </template>
+
+                  <template #default>
+                    <span class="custom-title">-{{item.spend}}</span>
+                  </template>
+                </van-cell>
+              </van-list>
+            </van-collapse-item>
+            <van-collapse-item name="2">
+              <template #title>
+                <div>Eating</div>
+              </template>
+              <template #value>
+                <div>-4565</div>
+              </template>
+              <van-list>
+                <van-cell v-for="(item, index) in list" :key="index">
+                  <template #title>
+                    <span class="custom-title">{{item.time}}</span>
+                  </template>
+
+                  <template #default>
+                    <span class="custom-title">-{{item.spend}}</span>
+                  </template>
+                </van-cell>
+              </van-list>
+            </van-collapse-item>
+            <van-collapse-item name="3">
+              <template #title>
+                <div>Eating</div>
+              </template>
+              <template #value>
+                <div>-4565</div>
+              </template>
+              <van-list>
+                <van-cell v-for="(item, index) in list" :key="index">
+                  <template #title>
+                    <span class="custom-title">{{item.time}}</span>
+                  </template>
+
+                  <template #default>
+                    <span class="custom-title">-{{item.spend}}</span>
+                  </template>
+                </van-cell>
+              </van-list>
+            </van-collapse-item>
+          </van-collapse>
+        </div>
       </van-tab>
       <van-tab title="趋势">
         <van-sticky z-index="10000">
@@ -34,9 +100,13 @@ import {
   List,
   Cell,
   Sticky,
-  Toast
+  Toast,
+  Collapse,
+  CollapseItem,
+  NavBar
 } from "vant";
 import VeLine from "v-charts/lib/line.common";
+import { GetList } from "../api";
 export default {
   components: {
     "van-dropdown-menu": DropdownMenu,
@@ -47,10 +117,14 @@ export default {
     "van-list": List,
     "van-cell": Cell,
     "van-sticky": Sticky,
+    "van-collapse": Collapse,
+    "van-collapse-item": CollapseItem,
+    "van-nav-bar": NavBar,
     VeLine
   },
   data() {
     return {
+      activeNames: ["1"],
       list: [],
       loading: false,
       finished: false,
@@ -78,23 +152,15 @@ export default {
     };
   },
   methods: {
-    onLoad() {
-      // 异步更新数据
-      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
-        }
-
-        // 加载状态结束
-        this.loading = false;
-
-        // 数据全部加载完成
-        if (this.list.length >= 40) {
-          this.finished = true;
-        }
-      }, 1000);
+    routerHome() {
+      this.$router.push("/");
     },
+    GetList() {
+      GetList().then(res => {
+        this.list = res;
+      });
+    },
+    onLoad() {},
     onClick(name, title) {
       Toast(title);
       if (title == "周") {
@@ -190,6 +256,10 @@ export default {
         };
       }
     }
+  },
+  mounted() {
+    this.$store.commit("toggleAddBtn", false);
+    this.GetList();
   }
 };
 </script>

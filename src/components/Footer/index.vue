@@ -1,19 +1,22 @@
 <template>
-  <div class="footer">
-    <div class="icon">
-      <div class="add" @click="AddAccount"></div>
-    </div>
-    <!-- <van-tabbar route v-model="active" active-color="#07c160" inactive-color="#000">
+  <transition name="van-slide">
+    <div class="footer" v-show="showAddBtn">
+      <div class="icon">
+        <div class="add" @click="AddAccount"></div>
+      </div>
+      <!-- <van-tabbar route v-model="active" active-color="#07c160" inactive-color="#000">
       <van-tabbar-item icon="home-o" replace to="/">首页</van-tabbar-item>
       <van-tabbar-item icon="chart-trending-o" replace to="/info">明细</van-tabbar-item>
       <van-tabbar-item icon="balance-o" replace to="/about">记账</van-tabbar-item>
       <van-tabbar-item icon="contact" replace to="/user">我的</van-tabbar-item>
-    </van-tabbar>-->
-  </div>
+      </van-tabbar>-->
+    </div>
+  </transition>
 </template>
 
 <script>
 // import { Tabbar, TabbarItem } from "vant";
+import { mapState } from "vuex";
 export default {
   // components: {
   //   "van-tabbar": Tabbar,
@@ -24,6 +27,7 @@ export default {
       active: 0
     };
   },
+  computed: mapState(["showAddBtn"]),
   methods: {
     AddAccount() {
       this.$router.push("/addaccount");
